@@ -1,26 +1,30 @@
-import React from 'react';
-
+import React, {useReducer} from 'react';
+import reducer, {initialState} from "./reducers/index.js";
+import { addOne } from "./actions/index.js";
 import './App.css';
 
 import TotalDisplay from './components/TotalDisplay';
 import CalcButton from './components/CalcButton';
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log(state, dispatch);
+
 
   return (
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
-        <a className="navbar-brand" href="#"><img width="40px" src="./Lambda-Logo-Red.png"/> Lambda Reducer Challenge</a>
+        <a className="navbar-brand" href="#"><img width="40px" src="./Lambda-Logo-Red.png" alt="red-logo"/> Lambda Reducer Challenge</a>
       </nav>
 
       <div className = "container row mt-5">
         <div className="col-md-12 d-flex justify-content-center">
           <form name="Cal">
             
-            <TotalDisplay value={0}/>
+            <TotalDisplay value={state.total}/>
             <div className="row details">
-              <span id="operation"><b>Operation:</b> X</span>
-              <span id="memory"><b>Memory:</b> 0</span>
+              <span id="operation"><b>Operation:</b> {state.operation}</span>
+              <span id="memory"><b>Memory:</b> {state.memory}</span>
             </div>
             
             <div className="row">
@@ -30,7 +34,7 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={1}/>
+              <CalcButton value={1} onclick={() => dispatch(addOne)} />
               <CalcButton value={2}/>
               <CalcButton value={3}/>
             </div>
